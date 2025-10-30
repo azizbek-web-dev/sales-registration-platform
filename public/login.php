@@ -10,14 +10,19 @@
 	<div class="login-wrap">
 		<div class="login-bg"></div>
 		<div class="login-card">
-			<div class="logo"><span class="logo-dot"></span><strong>Sales Platform</strong></div>
-			<h2 class="login-title">Sign in</h2>
-			<p class="login-sub">Access your dashboard</p>
+			<img class="logo-img" src="/public/assets/images/sale-logo.png" alt="Sales Platform">
+			<h2 class="login-title" style="text-align:center">Sign in</h2>
+			<p class="login-sub" style="text-align:center">Access your dashboard</p>
 			<form id="login-form" onsubmit="return false;">
 				<label for="email">Email</label>
 				<input type="email" id="email" name="email" required>
 				<label for="password">Password</label>
-				<input type="password" id="password" name="password" required>
+				<div class="field-wrap">
+					<input type="password" id="password" name="password" required>
+					<button type="button" id="toggle-eye" class="toggle-eye" aria-label="Show password">
+						<img id="eye-icon" src="/public/assets/icons/eye.svg" alt="toggle" width="20" height="20"/>
+					</button>
+				</div>
 				<div style="margin-top:14px">
 					<button id="login-btn" type="submit" style="width:100%">Login</button>
 				</div>
@@ -29,14 +34,34 @@
 	const form = document.getElementById('login-form');
 	const btn = document.getElementById('login-btn');
 	const msg = document.getElementById('msg');
+	const pwd = document.getElementById('password');
+	const toggle = document.getElementById('toggle-eye');
+	const eyeIcon = document.getElementById('eye-icon');
+	toggle.addEventListener('click', () => {
+		const isHidden = pwd.type === 'password';
+		pwd.type = isHidden ? 'text' : 'password';
+		eyeIcon.src = isHidden ? '/public/assets/icons/eye-off.svg' : '/public/assets/icons/eye.svg';
+		toggle.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
+	});
+
+	async function parseJsonSafe(res){
+		const contentType = res.headers.get('content-type') || '';
+		const bodyText = await res.text();
+		if (contentType.includes('application/json')) {
+			try { return JSON.parse(bodyText); } catch (_) { return null; }
+		}
+		try { return JSON.parse(bodyText); } catch (_) { return { error: bodyText || 'Unexpected empty response' }; }
+	}
+
 	form.addEventListener('submit', async () => {
 		btn.disabled = true;
 		msg.style.display = 'none';
 		try {
 			const payload = { email: form.email.value.trim(), password: form.password.value };
-			const res = await fetch('/api/login.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-			const data = await res.json();
-			if (!res.ok) throw new Error(data.error || 'Login failed');
+			const res = await fetch('../api/login.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+			const data = await parseJsonSafe(res);
+			if (!res.ok) throw new Error((data && data.error) ? data.error : `HTTP ${res.status}`);
+			if (!data || !data.user) throw new Error('Invalid server response');
 			switch (data.user.role) {
 				case 'admin': window.location.href = '/public/dashboard_admin.php'; break;
 				case 'seller': window.location.href = '/public/dashboard_seller.php'; break;

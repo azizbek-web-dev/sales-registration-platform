@@ -1,0 +1,15 @@
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f6f7fb;color:#222}
+.container{max-width:960px;margin:24px auto;padding:0 16px}
+.site-header,.site-footer{background:#0f62fe;color:#fff;padding:16px}
+.site-header h1{margin:0;font-size:20px}
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:16px;margin-bottom:16px}
+input,select,button{font:inherit}
+input,select{width:100%;padding:10px;border:1px solid #d1d5db;border-radius:6px}
+label{display:block;margin:8px 0 4px}
+button{background:#0f62fe;color:#fff;border:0;border-radius:6px;padding:10px 14px;cursor:pointer}
+button:disabled{opacity:.6;cursor:not-allowed}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{border:1px solid #e5e7eb;padding:8px;text-align:left}
+.alert{padding:10px;border-radius:6px}
+.alert.info{background:#e1f0ff;color:#093f8a}
+.alert.error{background:#ffe4e6;color:#7f1d1d}

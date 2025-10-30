@@ -29,7 +29,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
 .alert.error{background:#ffe4e6;color:#7f1d1d}
 
 /* Login layout */
-.login-wrap{min-height:calc(100vh - 120px);display:grid;place-items:center;position:relative;overflow:hidden}
+.login-wrap{min-height:100vh;display:grid;place-items:center;position:relative;overflow:hidden;padding:24px}
 .login-bg{position:absolute;inset:0;background:radial-gradient(1200px 600px at -10% 110%, #2349cc 0%, transparent 40%),radial-gradient(1000px 500px at 110% -10%, #2349cc 0%, transparent 40%);z-index:0}
 .login-bg::after{content:"";position:absolute;inset:0;background:url('/public/assets/images/bg-shape.svg') no-repeat right -120px top -80px/900px auto, url('/public/assets/images/bg-shape.svg') no-repeat left -200px bottom -200px/700px auto;opacity:.25}
 .login-card{position:relative;z-index:1;width:100%;max-width:400px;background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);padding:28px}
@@ -37,3 +37,18 @@ button:disabled{opacity:.6;cursor:not-allowed}
 .login-sub{margin:0 0 20px 0;color:var(--muted)}
 .logo{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .logo-dot{width:12px;height:12px;border-radius:50%;background:var(--primary)}
+
+/* Tablet */
+@media (max-width: 768px){
+	.login-card{max-width:460px;padding:24px}
+	.login-bg::after{background:url('/public/assets/images/bg-shape.svg') no-repeat right -220px top -140px/720px auto, url('/public/assets/images/bg-shape.svg') no-repeat left -260px bottom -260px/600px auto}
+}
+/* Mobile */
+@media (max-width: 480px){
+	.login-wrap{padding:16px}
+	.login-card{max-width:100%;padding:20px;border-radius:14px;box-shadow:0 6px 20px rgba(17,24,39,.06)}
+	input,select{padding:12px}
+	button{padding:12px}
+	.login-bg{background:radial-gradient(600px 300px at -20% 110%, #2349cc 0%, transparent 40%),radial-gradient(600px 300px at 120% -10%, #2349cc 0%, transparent 40%)}
+	.login-bg::after{background:url('/public/assets/images/bg-shape.svg') no-repeat right -260px top -180px/520px auto}
+}

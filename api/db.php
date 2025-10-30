@@ -1,4 +1,5 @@
 <?php
+if (!getenv('APP_ENV')) { putenv('APP_ENV=dev'); }
 $DB_HOST = getenv('DB_HOST') ?: '127.0.0.1';
 $DB_NAME = getenv('DB_NAME') ?: 'sales_platform';
 $DB_USER = getenv('DB_USER') ?: 'root';
